@@ -3,6 +3,7 @@ import UniformTypeIdentifiers
 
 struct ContentView: View {
     @ObservedObject var manager: PhotoManager
+    var onMenuUpdate: (() -> Void)?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -36,14 +37,17 @@ struct ContentView: View {
             HStack(spacing: 12) {
                 Toggle("Launch at Login", isOn: Binding(
                     get: { manager.launchAtLogin },
-                    set: { manager.setLaunchAtLogin($0) }
+                    set: {
+                        manager.setLaunchAtLogin($0)
+                        onMenuUpdate?()
+                    }
                 ))
                 .toggleStyle(.checkbox)
                 .font(.system(size: 11))
 
                 Spacer()
 
-                Text("Double-click or right-click photo")
+                Text("Right-click photo for options")
                     .font(.system(size: 10))
                     .foregroundStyle(.quaternary)
             }
@@ -128,21 +132,30 @@ struct ContentView: View {
 
             // Actions
             HStack(spacing: 2) {
-                Button { manager.toggleVisibility(item.id) } label: {
+                Button {
+                    manager.toggleVisibility(item.id)
+                    onMenuUpdate?()
+                } label: {
                     Image(systemName: item.isVisible ? "eye" : "eye.slash")
                         .font(.system(size: 11))
                 }
                 .buttonStyle(.borderless)
                 .help(item.isVisible ? "Hide" : "Show")
 
-                Button { manager.toggleLock(item.id) } label: {
+                Button {
+                    manager.toggleLock(item.id)
+                    onMenuUpdate?()
+                } label: {
                     Image(systemName: item.isLocked ? "lock.fill" : "lock.open")
                         .font(.system(size: 11))
                 }
                 .buttonStyle(.borderless)
                 .help(item.isLocked ? "Unlock" : "Lock")
 
-                Button(role: .destructive) { manager.removePhoto(item.id) } label: {
+                Button(role: .destructive) {
+                    manager.removePhoto(item.id)
+                    onMenuUpdate?()
+                } label: {
                     Image(systemName: "trash")
                         .font(.system(size: 11))
                 }
@@ -170,6 +183,7 @@ struct ContentView: View {
                     manager.addPhoto(img)
                 }
             }
+            onMenuUpdate?()
         }
     }
 }

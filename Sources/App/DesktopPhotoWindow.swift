@@ -171,12 +171,6 @@ class DraggablePhotoView: NSView {
     // MARK: - Mouse events
 
     override func mouseDown(with event: NSEvent) {
-        // Double-click → toggle lock
-        if event.clickCount == 2 {
-            onLockToggle?()
-            return
-        }
-
         if isLocked { return }
 
         guard let win = window else { return }

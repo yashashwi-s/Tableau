@@ -192,26 +192,27 @@ class PhotoManager: ObservableObject {
     func thumbnail(for item: PhotoItem, size: CGFloat = 48) -> NSImage? {
         let url = storageDir.appendingPathComponent(item.filename)
         guard let image = NSImage(contentsOf: url) else { return nil }
-        // Create a scaled-down version for efficiency
-        let thumb = NSImage(size: NSSize(width: size, height: size))
-        thumb.lockFocus()
-        let ar = image.size.width / image.size.height
-        let drawRect: NSRect
-        if ar > 1 {
-            let h = size / ar
-            drawRect = NSRect(x: 0, y: (size - h) / 2, width: size, height: h)
-        } else {
-            let w = size * ar
-            drawRect = NSRect(x: (size - w) / 2, y: 0, width: w, height: size)
+
+        let thumb = NSImage(size: NSSize(width: size, height: size), flipped: false) { rect in
+            let ar = image.size.width / image.size.height
+            let drawRect: NSRect
+            if ar > 1 {
+                let h = size / ar
+                drawRect = NSRect(x: 0, y: (size - h) / 2, width: size, height: h)
+            } else {
+                let w = size * ar
+                drawRect = NSRect(x: (size - w) / 2, y: 0, width: w, height: size)
+            }
+            image.draw(in: drawRect, from: .zero, operation: .sourceOver, fraction: 1.0)
+            return true
         }
-        image.draw(in: drawRect, from: .zero, operation: .sourceOver, fraction: 1.0)
-        thumb.unlockFocus()
         return thumb
     }
 
-    /// Label for a photo (e.g. "Photo 1").
+    /// Label for a photo.
     func label(for item: PhotoItem) -> String {
         guard let index = photos.firstIndex(where: { $0.id == item.id }) else { return "Photo" }
         return "Photo \(index + 1)"
     }
 }
+

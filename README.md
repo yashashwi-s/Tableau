@@ -19,22 +19,25 @@ Apple's WidgetKit only supports 4 fixed sizes: Small, Medium, Large, and Extra L
 ## Quick Start
 
 1. **Build & Run** the project in Xcode
-2. Look for the 📷 icon in your **menu bar**
-3. Click **Add Photo…** and select an image
-4. Your photo appears on your desktop — drag it anywhere
-5. **Double-click** a photo to lock/unlock its position
-6. Use the **slider** in settings to resize, or **drag corners/edges** directly
+2. A 📷 icon appears in your **menu bar** — click it for all controls
+3. Click **Add Photo…** and select one or more images
+4. Your photos appear on your desktop — drag them anywhere
+5. **Right-click** any photo to lock its position or remove it
+6. Use the **size slider** in Settings to resize, or **drag from corners** directly
+7. Want to hide the menu bar icon? Click **Hide Menu Bar Icon** — reopen the app from Spotlight to bring it back
 
 ## Features
 
-See [FEATURES.md](FEATURES.md) for a detailed breakdown.
+See [FEATURES.md](FEATURES.md) for the full breakdown and roadmap.
 
-- 🖼️ **Any aspect ratio** — your photo, your ratio
+- 🖼️ **Any aspect ratio** — your photo, your ratio, no cropping
 - 📌 **Multiple photos** — add as many as you want
-- 🔒 **Lock position** — double-click to lock/unlock
-- ↔️ **Resize from edges/corners** — corners maintain ratio, edges stretch freely
+- 🔒 **Lock position** — right-click photo or use menu bar
+- ↔️ **Resize from corners** — drag any corner to resize while maintaining aspect ratio
 - 🚀 **Launch at Login** — starts automatically with your Mac
-- 💾 **Remembers everything** — photos, positions, sizes, lock states persist across restarts
+- 💾 **Remembers everything** — photos, positions, sizes, lock states persist across restarts and quits
+- 🔽 **Hide menu bar icon** — reopen the app to bring it back
+- 🖱️ **Right-click context menu** — lock/unlock and remove directly from the photo
 - 🪶 **Ultra lightweight** — ~20MB RAM, zero CPU when idle
 - 🎨 **Rounded corners + shadow** — looks like a native widget
 
@@ -71,13 +74,13 @@ Then select the `PhotoWidgetOSX` scheme and hit **⌘R** to build and run.
 | Superlayer | ⚠️ Some flexibility | Paid subscription | Desktop overlay |
 | DeskTop Photo Player | ⚠️ Resizable window | ✅ Free | Floating window |
 
-**Our differentiator:** We're the only **free, open-source** app that creates desktop photo overlays with **automatic aspect ratio matching** and **edge/corner resize handles**.
+**Our differentiator:** The only **free, open-source** macOS app that creates desktop photo overlays with **automatic aspect ratio matching**, **corner resize handles**, and **right-click controls**.
 
 ## App Store
 
 To publish on the Mac App Store:
 - Requires an **Apple Developer Program** membership ($99/year)
-- App can be listed for **free** — there's no cost to list a free app beyond the developer fee
+- App can be listed for **free** — no additional cost beyond the developer fee
 - Must comply with App Sandbox and App Review Guidelines
 - This project is App Store-ready with minor additions (sandbox entitlements, app icon)
 
@@ -87,4 +90,4 @@ MIT License — do whatever you want with it.
 
 ## Contributing
 
-PRs welcome! See [FEATURES.md](FEATURES.md) for the roadmap of planned features.
+PRs welcome! See [FEATURES.md](FEATURES.md) for the roadmap.

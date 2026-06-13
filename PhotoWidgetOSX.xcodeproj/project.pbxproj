@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		287C9D4CFD45CAC080B80278 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B86CC3BD0DBCDB62CF588E /* ImageManager.swift */; };
 		524AC76DBAA6AAC648443E6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98684E8807A3C4C9FF7C64B2 /* Assets.xcassets */; };
+		71A493A3540103271A6FB1C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E033620FF187A2FB24064A /* AppDelegate.swift */; };
 		82C5822A70958CFCC7E088FD /* PhotoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A35BD4FFDCB87CB6AFCED68 /* PhotoItem.swift */; };
-		A56395A15E54425ED0CF4B6D /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD83706F123FFC7AC153AA1E /* MenuBarView.swift */; };
 		B8D8DDC32BDECA3FD46466DD /* PhotoWidgetOSXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47256044EF37732D082D1D50 /* PhotoWidgetOSXApp.swift */; };
 		E971549EB25EC9537296A203 /* DesktopPhotoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E5A8720B71F18522DC935D /* DesktopPhotoWindow.swift */; };
 		F3252ADFA28BC60458B0D40D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0985FA4B2EC4ADF0F8B231 /* ContentView.swift */; };
@@ -24,7 +24,7 @@
 		8A35BD4FFDCB87CB6AFCED68 /* PhotoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoItem.swift; sourceTree = "<group>"; };
 		98684E8807A3C4C9FF7C64B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9B0985FA4B2EC4ADF0F8B231 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		AD83706F123FFC7AC153AA1E /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		B7E033620FF187A2FB24064A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -55,11 +55,11 @@
 		B3055216DA0392F61BE79CDF /* App */ = {
 			isa = PBXGroup;
 			children = (
+				B7E033620FF187A2FB24064A /* AppDelegate.swift */,
 				98684E8807A3C4C9FF7C64B2 /* Assets.xcassets */,
 				9B0985FA4B2EC4ADF0F8B231 /* ContentView.swift */,
 				80E5A8720B71F18522DC935D /* DesktopPhotoWindow.swift */,
 				44B86CC3BD0DBCDB62CF588E /* ImageManager.swift */,
-				AD83706F123FFC7AC153AA1E /* MenuBarView.swift */,
 				8A35BD4FFDCB87CB6AFCED68 /* PhotoItem.swift */,
 				47256044EF37732D082D1D50 /* PhotoWidgetOSXApp.swift */,
 			);
@@ -133,10 +133,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71A493A3540103271A6FB1C3 /* AppDelegate.swift in Sources */,
 				F3252ADFA28BC60458B0D40D /* ContentView.swift in Sources */,
 				E971549EB25EC9537296A203 /* DesktopPhotoWindow.swift in Sources */,
 				287C9D4CFD45CAC080B80278 /* ImageManager.swift in Sources */,
-				A56395A15E54425ED0CF4B6D /* MenuBarView.swift in Sources */,
 				82C5822A70958CFCC7E088FD /* PhotoItem.swift in Sources */,
 				B8D8DDC32BDECA3FD46466DD /* PhotoWidgetOSXApp.swift in Sources */,
 			);

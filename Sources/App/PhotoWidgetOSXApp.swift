@@ -2,17 +2,13 @@ import SwiftUI
 
 @main
 struct PhotoWidgetOSXApp: App {
-    @StateObject private var manager = PhotoManager()
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
-        MenuBarExtra("Photo Widget", systemImage: "photo.on.rectangle") {
-            MenuBarView(manager: manager)
+        // The menu bar and settings window are managed by AppDelegate
+        // We just need one Scene to satisfy the protocol
+        Settings {
+            EmptyView()
         }
-
-        Window("Photo Widget", id: "settings") {
-            ContentView(manager: manager)
-                .frame(width: 420, height: 500)
-        }
-        .windowResizability(.contentSize)
     }
 }
