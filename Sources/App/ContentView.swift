@@ -9,7 +9,7 @@ struct ContentView: View {
         VStack(spacing: 0) {
             // Header
             HStack {
-                Text("Photo Widget")
+                Text("Photo Widget OSX")
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                 Spacer()
                 Button {
@@ -102,62 +102,43 @@ struct ContentView: View {
                     .frame(width: 44, height: 44)
             }
 
-            VStack(alignment: .leading, spacing: 3) {
+            VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 4) {
-                    if item.isLocked {
-                        Image(systemName: "lock.fill")
-                            .font(.system(size: 9))
-                            .foregroundStyle(.orange)
-                    }
                     Text(item.isVisible ? "On desktop" : "Hidden")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(item.isVisible ? .primary : .secondary)
+                    if item.isLocked {
+                        Text("· Locked")
+                            .font(.system(size: 11))
+                            .foregroundStyle(.orange)
+                    }
                 }
-
-                HStack(spacing: 4) {
-                    Slider(
-                        value: Binding(
-                            get: { item.widgetWidth },
-                            set: { manager.resize(item.id, to: $0) }
-                        ),
-                        in: 80...800, step: 10
-                    )
-                    .controlSize(.mini)
-                    Text("\(Int(item.widgetWidth))")
-                        .font(.system(size: 10, design: .monospaced))
-                        .foregroundStyle(.tertiary)
-                        .frame(width: 30, alignment: .trailing)
-                }
+                Text("Drag corners to resize · Right-click for options")
+                    .font(.system(size: 10))
+                    .foregroundStyle(.tertiary)
             }
 
+            Spacer()
+
             // Actions
-            HStack(spacing: 2) {
+            HStack(spacing: 4) {
                 Button {
                     manager.toggleVisibility(item.id)
                     onMenuUpdate?()
                 } label: {
                     Image(systemName: item.isVisible ? "eye" : "eye.slash")
-                        .font(.system(size: 11))
+                        .font(.system(size: 12))
                 }
                 .buttonStyle(.borderless)
                 .help(item.isVisible ? "Hide" : "Show")
-
-                Button {
-                    manager.toggleLock(item.id)
-                    onMenuUpdate?()
-                } label: {
-                    Image(systemName: item.isLocked ? "lock.fill" : "lock.open")
-                        .font(.system(size: 11))
-                }
-                .buttonStyle(.borderless)
-                .help(item.isLocked ? "Unlock" : "Lock")
 
                 Button(role: .destructive) {
                     manager.removePhoto(item.id)
                     onMenuUpdate?()
                 } label: {
-                    Image(systemName: "trash")
-                        .font(.system(size: 11))
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
                 }
                 .buttonStyle(.borderless)
                 .help("Remove")

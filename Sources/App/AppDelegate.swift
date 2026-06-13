@@ -39,7 +39,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if statusItem != nil { return }  // already showing
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        statusItem?.button?.image = NSImage(systemSymbolName: "photo.on.rectangle", accessibilityDescription: "Photo Widget")
+        statusItem?.button?.image = NSImage(systemSymbolName: "photo.on.rectangle", accessibilityDescription: "Photo Widget OSX")
+        statusItem?.button?.toolTip = "Photo Widget OSX"
         statusItem?.button?.image?.size = NSSize(width: 18, height: 18)
 
         UserDefaults.standard.set(false, forKey: "hideMenuBarIcon")
@@ -115,9 +116,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
                 // Status indicators
                 var status = ""
-                if !item.isVisible { status += " (hidden)" }
-                if item.isLocked { status += " 🔒" }
-                if !status.isEmpty { photoItem.title = title + status }
+                if !item.isVisible { status += " — hidden" }
+                if item.isLocked { status += " — locked" }
+                if !status.isEmpty { photoItem.title = title + status } else { photoItem.title = title }
 
                 menu.addItem(photoItem)
             }
@@ -174,7 +175,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             backing: .buffered,
             defer: false
         )
-        window.title = "Photo Widget"
+        window.title = "Photo Widget OSX"
         window.center()
         window.contentView = NSHostingView(rootView: contentView)
         window.isReleasedWhenClosed = false

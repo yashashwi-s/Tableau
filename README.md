@@ -1,93 +1,91 @@
-# Photo Widget for macOS
+# Photo Widget OSX
 
-> Place any photo on your desktop as a perfectly fitted, borderless widget — with the exact aspect ratio of the image. No cropping. No black bars. Just your photo.
+> Place any photo on your macOS desktop as a perfectly fitted, borderless widget — exactly the right aspect ratio, no cropping, no black bars.
 
 ![macOS](https://img.shields.io/badge/macOS-14.0+-black?style=flat-square&logo=apple)
 ![Swift](https://img.shields.io/badge/Swift-5.9-orange?style=flat-square&logo=swift)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
+![Version](https://img.shields.io/badge/Version-1.0.0-green?style=flat-square)
 
 ## What is this?
 
-Photo Widget is a lightweight macOS menu bar app that places photos directly on your desktop as **borderless, always-on-desktop overlays** that perfectly match each image's native aspect ratio.
+Photo Widget OSX is a lightweight macOS menu bar app that places photos directly on your desktop as **borderless, always-on-desktop overlays** that perfectly match each image's native aspect ratio.
 
-Unlike Apple's built-in WidgetKit widgets (which are locked to fixed sizes and crop your images), Photo Widget creates a custom-sized window for each photo — so a 16:9 landscape stays 16:9, a 3:4 portrait stays 3:4, and a panorama stays a panorama.
+Unlike Apple's built-in WidgetKit widgets (which lock you to 4 fixed sizes and crop your images), Photo Widget OSX creates a custom-sized window for each photo — so a 16:9 landscape stays 16:9, a 3:4 portrait stays 3:4, and a panorama stays a panorama.
 
-## Why not use WidgetKit?
+## Download
 
-Apple's WidgetKit only supports 4 fixed sizes: Small, Medium, Large, and Extra Large. Your photo must fit into one of those rectangles — meaning it gets **cropped** or **padded with black bars**. Photo Widget bypasses this limitation entirely by using borderless desktop windows instead.
+**[⬇️ Download latest release](https://github.com/yashashwi-s/PhotoWidgetOSX/releases/latest)**
+
+Or install via Homebrew:
+```bash
+brew install --cask photo-widget-osx
+```
+
+> **Note:** Since this app is not notarized (no $99 Apple Developer account required!), macOS will show a security warning on first launch. To open it: **right-click the app → Open → Open**.
 
 ## Quick Start
 
-1. **Build & Run** the project in Xcode
-2. A 📷 icon appears in your **menu bar** — click it for all controls
-3. Click **Add Photo…** and select one or more images
-4. Your photos appear on your desktop — drag them anywhere
-5. **Right-click** any photo to lock its position or remove it
-6. Use the **size slider** in Settings to resize, or **drag from corners** directly
-7. Want to hide the menu bar icon? Click **Hide Menu Bar Icon** — reopen the app from Spotlight to bring it back
+1. Download and open `Photo Widget OSX.dmg`
+2. Drag the app to your Applications folder
+3. Launch it — a 📷 icon appears in your **menu bar**
+4. Click **Add Photo…** to pick images from your Mac
+5. Your photos appear on your desktop — **drag them anywhere**
+6. **Right-click** any photo to lock its position or remove it
+7. **Drag corners** to resize (aspect ratio is always maintained)
 
 ## Features
 
-See [FEATURES.md](FEATURES.md) for the full breakdown and roadmap.
-
-- 🖼️ **Any aspect ratio** — your photo, your ratio, no cropping
-- 📌 **Multiple photos** — add as many as you want
-- 🔒 **Lock position** — right-click photo or use menu bar
-- ↔️ **Resize from corners** — drag any corner to resize while maintaining aspect ratio
+- 🖼️ **Any aspect ratio** — no cropping, no black bars, ever
+- 📌 **Multiple photos** — add as many as you want, each independent
+- 🔒 **Lock position** — right-click photo or use menu bar to lock/unlock
+- ↔️ **Corner resize** — drag any corner to resize (aspect ratio locked)
 - 🚀 **Launch at Login** — starts automatically with your Mac
-- 💾 **Remembers everything** — photos, positions, sizes, lock states persist across restarts and quits
-- 🔽 **Hide menu bar icon** — reopen the app to bring it back
-- 🖱️ **Right-click context menu** — lock/unlock and remove directly from the photo
+- 💾 **Remembers everything** — photos, positions, sizes, lock states all persist
+- 🔽 **Hide menu bar icon** — use menu → reopen app from Spotlight to show it again
 - 🪶 **Ultra lightweight** — ~20MB RAM, zero CPU when idle
-- 🎨 **Rounded corners + shadow** — looks like a native widget
+- 🎨 **Rounded corners + shadow** — native macOS widget aesthetic
+
+## Why not the App Store?
+
+Apple's WidgetKit (what powers desktop widgets) only supports 4 fixed sizes. Photo Widget OSX bypasses this entirely using borderless desktop windows — which Apple's sandboxing rules don't allow on the App Store. So we're free and open source instead.
+
+## Competitive Landscape
+
+| App | Custom Ratio | Free | Method |
+|-----|:---:|:---:|--------|
+| **Photo Widget OSX** | ✅ Any ratio | ✅ Free & OSS | Desktop overlay |
+| Apple Photos Widget | ❌ 4 fixed sizes | ✅ Built-in | WidgetKit |
+| WidgetWall | ❌ Fixed sizes | Freemium | WidgetKit |
+| Color Widgets | ❌ Fixed sizes | Freemium ~$5 | WidgetKit |
+| Superlayer | ⚠️ Limited | 💰 Paid sub | Desktop overlay |
 
 ## System Requirements
 
-- macOS 14.0 (Sonoma) or later
-- ~20-30MB RAM per running instance
+- macOS 14.0 Sonoma or later
+- Apple Silicon or Intel Mac
 
 ## Building from Source
 
 ```bash
+# Install XcodeGen
+brew install xcodegen
+
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/PhotoWidgetOSX.git
+git clone https://github.com/yashashwi-s/PhotoWidgetOSX.git
 cd PhotoWidgetOSX
 
-# Generate Xcode project (requires XcodeGen)
-brew install xcodegen
+# Generate Xcode project
 xcodegen generate
 
-# Open in Xcode
+# Open in Xcode and hit ⌘R
 open PhotoWidgetOSX.xcodeproj
 ```
 
-Then select the `PhotoWidgetOSX` scheme and hit **⌘R** to build and run.
-
-## Competitive Landscape
-
-| App | Custom Ratio? | Free? | Approach |
-|-----|:---:|:---:|---------|
-| **Photo Widget (this)** | ✅ Any | ✅ Free & open source | Desktop overlay |
-| Apple Photos Widget | ❌ Fixed 4 sizes | ✅ Built-in | WidgetKit |
-| WidgetWall | ❌ Fixed sizes | Freemium | WidgetKit |
-| Color Widgets | ❌ Fixed sizes | Freemium ($5 Pro) | WidgetKit |
-| Superlayer | ⚠️ Some flexibility | Paid subscription | Desktop overlay |
-| DeskTop Photo Player | ⚠️ Resizable window | ✅ Free | Floating window |
-
-**Our differentiator:** The only **free, open-source** macOS app that creates desktop photo overlays with **automatic aspect ratio matching**, **corner resize handles**, and **right-click controls**.
-
-## App Store
-
-To publish on the Mac App Store:
-- Requires an **Apple Developer Program** membership ($99/year)
-- App can be listed for **free** — no additional cost beyond the developer fee
-- Must comply with App Sandbox and App Review Guidelines
-- This project is App Store-ready with minor additions (sandbox entitlements, app icon)
-
 ## License
 
-MIT License — do whatever you want with it.
+MIT — use it, fork it, do whatever you want.
 
-## Contributing
+## Roadmap
 
-PRs welcome! See [FEATURES.md](FEATURES.md) for the roadmap.
+See [FEATURES.md](FEATURES.md) for what's coming next.

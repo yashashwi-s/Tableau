@@ -1,87 +1,82 @@
-# Photo Widget — Features
+# Photo Widget OSX — Features
 
-## ✅ Implemented
+## ✅ Implemented (v1.0.0)
 
 ### Core
-- [x] **Desktop photo overlay** — borderless window at desktop level, sits behind all normal windows
-- [x] **Exact aspect ratio matching** — widget size is computed from the image's native dimensions
-- [x] **Multiple photos** — add as many images as you want, each gets its own window
-- [x] **Rounded corners** — 16px continuous corners matching native macOS widget aesthetic
-- [x] **Drop shadow** — subtle shadow for depth, just like system widgets
+- [x] Desktop photo overlay — borderless NSWindow at desktop level, behind all normal windows
+- [x] Exact aspect ratio matching — window sized precisely from the image's native dimensions
+- [x] Multiple photos — add as many as you want, each with their own independent window
+- [x] Rounded corners — 16px continuous corners, scales down proportionally for smaller sizes
+- [x] Drop shadow — subtle shadow for depth, matching native macOS widget aesthetic
 
 ### Interaction
-- [x] **Drag to reposition** — click and drag anywhere on the photo to move it
-- [x] **Lock position** — double-click to toggle lock (shows lock/unlock icon flash)
-- [x] **Resize from corners** — maintains aspect ratio (proportional scaling)
-- [x] **Resize from edges** — free stretch (allows changing aspect ratio)
-- [x] **Resize via slider** — per-photo size slider in settings (150–800px range)
-- [x] **Cursor feedback** — cursor changes to resize arrows/crosshair near edges/corners
+- [x] Drag to reposition — click and drag anywhere on the photo to move it
+- [x] Lock position — right-click or menu bar to lock (prevents accidental moves)
+- [x] Resize from corners — drag any corner; aspect ratio is always maintained
+- [x] Cursor feedback — cursor changes to crosshair near corners, open hand in center
 
 ### Persistence
-- [x] **Remember photos** — saved as JPEG in Application Support
-- [x] **Remember positions** — window frame persisted per photo
-- [x] **Remember sizes** — widget width persisted per photo
-- [x] **Remember lock state** — lock/unlock state persisted per photo
-- [x] **Remember visibility** — show/hide state persisted per photo
-- [x] **All state survives restarts** — everything loads back on app launch
+- [x] Remember photos — JPEG copies stored in Application Support/PhotoWidget/
+- [x] Remember position — window frame (x, y) persisted per photo
+- [x] Remember size — widget width persisted per photo
+- [x] Remember lock state — per photo
+- [x] Remember visibility — per photo
+- [x] Persist on quit — saves everything when app quits (NSApplication.willTerminate)
+- [x] Restore on launch — all photos and positions reload from disk on startup
 
 ### App
-- [x] **Menu bar app** — lives in menu bar, no dock icon clutter (LSUIElement)
-- [x] **Menu bar controls** — add photo, show/hide each, remove all, quit
-- [x] **Settings window** — photo list with per-photo controls
-- [x] **Launch at Login** — toggle in settings, uses SMAppService
-- [x] **Multi-select file picker** — add multiple photos at once
-- [x] **Show/Hide per photo** — eye icon toggle in settings and menu bar
-- [x] **Per-photo controls** — lock, visibility, size, delete for each photo
+- [x] Menu bar agent — LSUIElement, no dock icon
+- [x] NSStatusItem menu — full control: add, show/hide, lock/unlock, remove, quit
+- [x] Per-photo submenus with thumbnail images in menu
+- [x] Lock/remove via right-click directly on the photo
+- [x] Settings window — photo list with visibility/remove controls + launch at login
+- [x] Hide menu bar icon — reopen app to show it again
+- [x] Launch at Login — SMAppService
+- [x] Multi-select file picker — add multiple photos at once
+
+### Design
+- [x] App icon — custom blue-purple gradient with photo frame
+- [x] Clean lock state: "· Locked" text label (no emojis)
+- [x] Status text in menu: "Photo 1 — locked", "Photo 2 — hidden"
 
 ### Performance
-- [x] **Ultra lightweight** — ~20-30MB RAM, zero CPU when idle (static image, no timers)
-- [x] **Efficient storage** — JPEG compression at 90% quality
-- [x] **No background processing** — completely idle when not being interacted with
+- [x] Ultra lightweight — ~20MB RAM, zero CPU at idle
+- [x] JPEG at 90% quality — good balance of size and quality
+- [x] No background timers or polling
 
 ---
 
-## 🔮 Future Features
+## 🔮 Roadmap
 
 ### v1.1 — Polish
-- [ ] **App icon** — custom app icon for menu bar and About dialog
-- [ ] **Right-click context menu on photo** — lock, resize, remove, bring to front
-- [ ] **Keyboard shortcuts** — ⌘H to hide all, ⌘L to lock all
-- [ ] **Snap to grid** — hold Shift while dragging to snap to alignment grid
-- [ ] **Multi-monitor support** — remember which display each photo is on
+- [ ] Right-click show context menu position indicator ("click to dismiss")
+- [ ] Snap to screen edges when dragging near a border
+- [ ] Keyboard shortcut to show/hide all photos (⌘H in settings)
+- [ ] Multi-display awareness — remember which screen each photo was on
+- [ ] Smoother resize animation (no flicker on fast drag)
 
-### v1.2 — Customization
-- [ ] **Custom corner radius** — slider to adjust from sharp (0) to pill-shaped
-- [ ] **Border/frame** — optional thin border with color picker
-- [ ] **Opacity control** — per-photo opacity slider
-- [ ] **Rotation** — slight tilt for a "pinned photo" look
-- [ ] **Caption/label** — optional text overlay below photo
+### v1.2 — Customisation
+- [ ] Custom corner radius per photo (0 = square, max = fully rounded)
+- [ ] Photo opacity/transparency slider per photo
+- [ ] Thin border option with colour picker
+- [ ] Shadow intensity control
 
-### v1.3 — Layouts & Grids
-- [ ] **Custom grids** — define a grid layout, place multiple photos in a grid
-- [ ] **Collage mode** — arrange photos in a collage with auto-layout
-- [ ] **Group photos** — group multiple photos, move/resize as a unit
-- [ ] **Alignment guides** — smart guides when dragging near other photos
-- [ ] **Templates** — preset layouts (2x2 grid, filmstrip, scattered, etc.)
+### v1.3 — Grid & Layout
+- [ ] Custom grid — define rows/columns, photos snap into a layout
+- [ ] Collage mode — auto-arrange multiple photos in a collage
+- [ ] Group photos — move/resize multiple photos together as a unit
+- [ ] Smart alignment guides when dragging near other photos
 
-### v1.4 — Albums & Slideshow
-- [ ] **Photo albums** — group photos, cycle through them on a timer
-- [ ] **Slideshow widget** — auto-rotate photos with configurable interval
-- [ ] **Photos.app integration** — import directly from Photos library
-- [ ] **Folder watching** — point to a folder, auto-update when photos change
+### v1.4 — Content
+- [ ] Slideshow mode — rotate photos in a window on a configurable timer
+- [ ] Folder watching — point to a folder, auto-update when photos change
+- [ ] Photos.app integration — pick directly from your Photos library
+- [ ] Animated GIF support
 
-### v1.5 — Advanced
-- [ ] **Animated GIF support** — display animated GIFs on desktop
-- [ ] **Video widget** — loop a short video clip as a desktop widget
-- [ ] **URL image** — fetch and display an image from a URL (auto-refresh)
-- [ ] **Calendar photo** — show a different photo for each day/month
-- [ ] **Widgets for other content** — text notes, clocks, weather (stretch goal)
-
-### App Store
-- [ ] **Sandbox compliance** — add required entitlements
-- [ ] **Privacy manifest** — add NSPrivacyAccessedAPITypes
-- [ ] **App Store screenshots** — marketing materials
-- [ ] **Notarization** — for direct distribution outside App Store
+### v1.5 — Distribution
+- [ ] Homebrew Cask — `brew install --cask photo-widget-osx`
+- [ ] GitHub Actions CI — auto-build DMG on each tagged release
+- [ ] Auto-update — check GitHub Releases for new versions
 
 ---
 
@@ -89,16 +84,19 @@
 
 ```
 Sources/App/
-├── PhotoWidgetOSXApp.swift    # App entry — menu bar + settings window
-├── ContentView.swift          # Settings UI — photo list with controls
-├── MenuBarView.swift          # Menu bar dropdown
-├── DesktopPhotoWindow.swift   # Borderless NSWindow + drag/resize logic
-├── PhotoItem.swift            # Data model (Codable)
-├── ImageManager.swift         # PhotoManager — multi-photo orchestration
-└── Assets.xcassets/           # App icon, accent color
+├── PhotoWidgetOSXApp.swift   # App entry — @NSApplicationDelegateAdaptor
+├── AppDelegate.swift         # NSStatusItem + settings window management
+├── ContentView.swift         # SwiftUI settings UI
+├── DesktopPhotoWindow.swift  # Borderless NSWindow + drag/resize/right-click
+├── PhotoItem.swift           # Codable data model per photo
+├── ImageManager.swift        # PhotoManager — orchestrates all photos + persistence
+└── Assets.xcassets/
+    └── AppIcon.appiconset/   # Icon at all required sizes (16–1024px)
 ```
 
-**Data storage:**
-- Photos: `~/Library/Application Support/PhotoWidget/*.jpg`
-- State: `~/Library/Application Support/PhotoWidget/photos.json`
-- Preferences: `UserDefaults` (launch at login, menu bar visibility)
+**Storage:**
+```
+~/Library/Application Support/PhotoWidget/
+├── photos.json               # All PhotoItem state (Codable, atomic write)
+└── *.jpg                     # Copies of each added photo at 90% JPEG quality
+```

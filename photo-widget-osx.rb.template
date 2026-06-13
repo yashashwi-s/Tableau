@@ -1,0 +1,17 @@
+cask "photo-widget-osx" do
+  version "1.0.0"
+  sha256 "REPLACE_WITH_SHA256_OF_YOUR_DMG"
+
+  url "https://github.com/yashashwi-s/PhotoWidgetOSX/releases/download/v#{version}/Photo.Widget.OSX-#{version}.dmg"
+
+  name "Photo Widget OSX"
+  desc "Place any photo on your macOS desktop as a borderless widget with perfect aspect ratio"
+  homepage "https://github.com/yashashwi-s/PhotoWidgetOSX"
+
+  app "Photo Widget OSX.app"
+
+  zap trash: [
+    "~/Library/Application Support/PhotoWidget",
+    "~/Library/Preferences/com.yashashwi.photowidgetosx.plist",
+  ]
+end
