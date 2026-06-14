@@ -2,6 +2,11 @@
 
 > Place any photo on your macOS desktop as a perfectly fitted, borderless widget — exactly the right aspect ratio, no cropping, no black bars.
 
+<br>
+<p align="center">
+  <img src="assets/demo.gif" alt="Photo Widget OSX Action Demo" width="100%" />
+</p>
+<br>
 ![macOS](https://img.shields.io/badge/macOS-14.0+-black?style=flat-square&logo=apple)
 ![Swift](https://img.shields.io/badge/Swift-5.9-orange?style=flat-square&logo=swift)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
