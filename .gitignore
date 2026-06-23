@@ -17,6 +17,7 @@ DerivedData/
 # Archives & exports
 *.xcarchive
 export/
+dist/
 
 # macOS
 .DS_Store

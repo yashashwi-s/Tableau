@@ -77,7 +77,7 @@ struct ContentView: View {
 
             Spacer()
 
-            Text("v1.1")
+            Text("v2.0.0")
                 .font(.system(size: 9, weight: .medium, design: .monospaced))
                 .foregroundStyle(.quaternary)
         }

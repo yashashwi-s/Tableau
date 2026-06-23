@@ -77,7 +77,12 @@ class DesktopPhotoWindow: NSWindow {
 
     func hidePhoto() {
         teardownFlagsMonitor()
-        orderOut(nil)
+        // Strip any in-flight CATransition animations to prevent stale callbacks
+        if let container = contentView as? DraggablePhotoView {
+            container.layer?.removeAllAnimations()
+            container.imageView.layer?.removeAllAnimations()
+        }
+        close()
     }
 
     func setLocked(_ locked: Bool) {

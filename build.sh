@@ -1,60 +1,101 @@
 #!/bin/bash
-# build.sh — Build and ad-hoc sign Photo Widget OSX for distribution
-# Usage: ./build.sh
+# build.sh — Build, test, and package Tableau for macOS
+# Usage:
+#   ./build.sh           # Just build
+#   ./build.sh --run     # Build + install to /Applications + launch
+#   ./build.sh --release # Build + create .zip and .dmg in dist/
 
 set -euo pipefail
 
-APP_NAME="Photo Widget OSX"
-SCHEME="PhotoWidgetOSX"
+APP_NAME="Tableau"
+SCHEME="Tableau"
 BUILD_DIR="build"
 OUTPUT_DIR="dist"
 
-echo "🔧 Generating Xcode project..."
-xcodegen generate
+# Auto-detect Xcode path
+if [ -d "/Applications/Xcode.app" ]; then
+    export DEVELOPER_DIR="/Applications/Xcode.app/Contents/Developer"
+elif [ -d "/Applications/Xcode-beta.app" ]; then
+    export DEVELOPER_DIR="/Applications/Xcode-beta.app/Contents/Developer"
+else
+    echo "❌ No Xcode installation found in /Applications"
+    exit 1
+fi
 
-echo "🏗️  Building..."
+echo "🔧 Using Xcode at: $DEVELOPER_DIR"
+
+# Generate Xcode project
+echo "⚙️  Generating Xcode project..."
+xcodegen generate 2>&1 | tail -1
+
+# Build
+echo "🏗️  Building $APP_NAME (Release)..."
 xcodebuild \
+  -project "$APP_NAME.xcodeproj" \
   -scheme "$SCHEME" \
   -configuration Release \
-  -derivedDataPath "$BUILD_DIR" \
-  -arch arm64 -arch x86_64 \
-  ONLY_ACTIVE_ARCH=NO \
+  CONFIGURATION_BUILD_DIR="$BUILD_DIR/Release" \
   CODE_SIGN_IDENTITY="-" \
   CODE_SIGN_STYLE=Manual \
   DEVELOPMENT_TEAM="" \
-  build 2>&1 | tail -5
+  build 2>&1 | grep -E "BUILD|error:|warning:" || true
 
-# Find the built .app
-APP_PATH=$(find "$BUILD_DIR" -name "$APP_NAME.app" -type d | head -1)
+APP_PATH="$BUILD_DIR/Release/$APP_NAME.app"
 
-if [ -z "$APP_PATH" ]; then
-  echo "❌ Build failed — .app not found"
+if [ ! -d "$APP_PATH" ]; then
+  echo "❌ Build failed — $APP_NAME.app not found"
   exit 1
 fi
 
-echo "✅ Built: $APP_PATH"
+APP_SIZE=$(du -sm "$APP_PATH" | cut -f1)
+echo "✅ Built: $APP_PATH (${APP_SIZE}MB)"
 
-# Ad-hoc codesign (deep)
-echo "🔏 Ad-hoc codesigning..."
-codesign --force --deep --sign - "$APP_PATH"
+# Sanity check
+if [ "$APP_SIZE" -lt 1 ]; then
+  echo "❌ Build output is suspiciously small (${APP_SIZE}MB). Something went wrong."
+  exit 1
+fi
 
-# Strip quarantine attribute
-xattr -cr "$APP_PATH"
+# --run: Install and launch
+if [ "${1:-}" = "--run" ]; then
+    echo "📲 Installing to /Applications..."
+    rm -rf "/Applications/$APP_NAME.app"
+    cp -R "$APP_PATH" "/Applications/$APP_NAME.app"
+    xattr -cr "/Applications/$APP_NAME.app"
+    echo "🚀 Launching $APP_NAME..."
+    open "/Applications/$APP_NAME.app"
+    echo "✅ Done! $APP_NAME is running."
+    exit 0
+fi
 
-# Copy to dist/
-mkdir -p "$OUTPUT_DIR"
-rm -rf "$OUTPUT_DIR/$APP_NAME.app"
-cp -R "$APP_PATH" "$OUTPUT_DIR/$APP_NAME.app"
+# --release: Package for distribution
+if [ "${1:-}" = "--release" ]; then
+    mkdir -p "$OUTPUT_DIR"
+    rm -f "$OUTPUT_DIR/$APP_NAME.app.zip" "$OUTPUT_DIR/$APP_NAME.dmg"
 
-echo "📦 Creating zip for distribution..."
-cd "$OUTPUT_DIR"
-rm -f PhotoWidgetOSX.zip
-ditto -c -k --sequesterRsrc --keepParent "$APP_NAME.app" PhotoWidgetOSX.zip
-cd ..
+    echo "📦 Creating zip..."
+    cd "$BUILD_DIR/Release"
+    ditto -c -k --sequesterRsrc --keepParent "$APP_NAME.app" "../../$OUTPUT_DIR/$APP_NAME.app.zip"
+    cd ../..
+
+    echo "💿 Creating DMG..."
+    hdiutil create \
+      -volname "$APP_NAME" \
+      -srcfolder "$APP_PATH" \
+      -ov -format UDZO \
+      "$OUTPUT_DIR/$APP_NAME.dmg" 2>&1 | grep -v "WARNING" || true
+
+    ZIP_SIZE=$(du -sm "$OUTPUT_DIR/$APP_NAME.app.zip" | cut -f1)
+    DMG_SIZE=$(du -sm "$OUTPUT_DIR/$APP_NAME.dmg" | cut -f1)
+
+    echo ""
+    echo "✅ Release artifacts ready!"
+    echo "   Zip: $OUTPUT_DIR/$APP_NAME.app.zip (${ZIP_SIZE}MB)"
+    echo "   DMG: $OUTPUT_DIR/$APP_NAME.dmg (${DMG_SIZE}MB)"
+    echo ""
+    echo "Upload these to GitHub Releases."
+    exit 0
+fi
 
 echo ""
-echo "✅ Done!"
-echo "   App:  $OUTPUT_DIR/$APP_NAME.app"
-echo "   Zip:  $OUTPUT_DIR/PhotoWidgetOSX.zip"
-echo ""
-echo "Upload PhotoWidgetOSX.zip to GitHub Releases."
+echo "✅ Build complete. Use --run to install+launch, or --release to package."

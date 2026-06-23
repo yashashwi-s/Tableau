@@ -205,6 +205,7 @@ class PhotoManager: ObservableObject {
 
     private func createWindow(for item: PhotoItem, image: NSImage) {
         let window = DesktopPhotoWindow()
+        window.isReleasedWhenClosed = false
         window.photoId = item.id
         window.showPhoto(image, baseWidth: item.widgetWidth, locked: item.isLocked, settings: item)
 
@@ -513,6 +514,7 @@ class PhotoManager: ObservableObject {
 
     func nextFolderImage(_ id: UUID) {
         guard let index = photos.firstIndex(where: { $0.id == id }),
+              photos[index].isVisible,
               let images = folderImages[id], !images.isEmpty else { return }
 
         let item = photos[index]

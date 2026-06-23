@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode Project
+        run: xcodegen generate
+
+      - name: Build
+        run: |
+          xcodebuild \
+            -project Tableau.xcodeproj \
+            -scheme Tableau \
+            -configuration Release \
+            CONFIGURATION_BUILD_DIR=build/Release \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGN_STYLE=Manual \
+            DEVELOPMENT_TEAM="" \
+            build
+
+      - name: Validate Build
+        run: |
+          APP_PATH="build/Release/Tableau.app"
+          if [ ! -d "$APP_PATH" ]; then
+            echo "❌ Tableau.app not found"
+            exit 1
+          fi
+          SIZE=$(du -sm "$APP_PATH" | cut -f1)
+          echo "✅ Tableau.app size: ${SIZE}MB"
+          if [ "$SIZE" -lt 1 ]; then
+            echo "❌ Build output too small (${SIZE}MB)"
+            exit 1
+          fi
